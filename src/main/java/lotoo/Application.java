@@ -10,5 +10,6 @@ public class Application {
     Lotto lotto = new Lottos();
     lotto.generateLottoNumbers();
     lotto.generateBonusNumber();
+
     }
 }
