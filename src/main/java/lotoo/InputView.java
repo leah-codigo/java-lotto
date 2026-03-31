@@ -1,6 +1,5 @@
 package lotoo;
 
-import java.security.PublicKey;
 import java.util.*;
 
 public class InputView {
@@ -10,7 +9,7 @@ public class InputView {
     private static String exceptionMessage = "[ERROR]";
     private Scanner scanner = new Scanner(System.in);
     private List<Integer> inputLottoNumbers = new ArrayList<>();
-    private static final int minNumber = 1 ;
+
     private static final int maxNumber = 45 ;
     private static final int lottoNumberCount = 6;
 

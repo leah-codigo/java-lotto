@@ -1,13 +1,11 @@
 package lotoo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Lottos {
 
     private List<Lotto> lottos = new ArrayList<>();
-
 
     // 구매가능한 수량만큼 로또 생성
     public List<Lotto> generateLottos(int count) {

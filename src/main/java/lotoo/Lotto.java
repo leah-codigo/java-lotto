@@ -5,7 +5,6 @@ import java.util.*;
 public class Lotto {
     //1-45까지 로또번호 범위
     //1개 > 6개 출력 , 중복불가
-    // 보너스 번호 한개 출력 , 중복불가
 
     private static final int minNumber = 1 ;
     private static final int maxNumber = 45 ;
@@ -28,14 +27,5 @@ public class Lotto {
             numbers.add(num);
         }
         return numbers;
-    }
-
-    public int generateBonusNumber() { //보너스 번호 1개 생성
-        int bonus = random.nextInt(maxNumber) + minNumber;
-        while (numbers.contains(bonus)) {
-            bonus = random.nextInt(maxNumber)+minNumber;
-        }
-        numbers.add(bonus);
-        return bonus;
     }
 }
