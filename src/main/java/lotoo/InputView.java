@@ -9,7 +9,6 @@ public class InputView {
     private static String exceptionMessage = "[ERROR]";
     private Scanner scanner = new Scanner(System.in);
     private List<Integer> inputLottoNumbers = new ArrayList<>();
-
     private static final int maxNumber = 45 ;
     private static final int lottoNumberCount = 6;
 
@@ -39,13 +38,13 @@ public class InputView {
     }
 
     // 로또 번호 6개 받기 / 중복없이 / 범위: 1-45까지
-    // 보너스 번호
     public List<Integer> readLottoNumbers() {
         inputLottoNumbers.clear();
 
             System.out.println("당첨번호를 입력해 주세요 ( , 구분) : ");
             String lottoNumbers = scanner.nextLine();
             String[] numbers = lottoNumbers.split(",");
+
             if (numbers.length != lottoNumberCount) { // 예외처리: 로또 번호가 6개가 아닌 경우
                 throw new IllegalArgumentException(exceptionMessage + " 6개의 번호를 입력해주세요.");
             }
@@ -66,6 +65,7 @@ public class InputView {
         return inputLottoNumbers;
     }
 
+    // 보너스 번호
     public int LottoBonusNumber() {
         int bonusNumber;
         bonusNumber = 0;
