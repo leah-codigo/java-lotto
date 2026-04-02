@@ -10,6 +10,10 @@ public class Lotto {
     private static final int maxNumber = 45 ;
     private static final int lottoNumberCount = 6;
 
+    public Set<Integer> getNumbers() {
+        return numbers;
+    }
+
     @Override
     public String toString() {
         List<Integer> sorted = new ArrayList<>(numbers);
