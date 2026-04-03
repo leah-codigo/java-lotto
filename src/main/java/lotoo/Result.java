@@ -5,7 +5,8 @@ import java.util.List;
 public class Result {
 
     // 당첨 등수 계산
-    public int checkResult(List<Lotto> myLottos,List<Integer> readNumbers,int bonusNumber) {
+    public int[] checkResult(List<Lotto> myLottos,List<Integer> readNumbers,int bonusNumber) {
+        int[] rankArray = new int[6]; //1-5등까지 저장
 
         for (Lotto myLotto : myLottos) { // 로또 한장(한줄씩) 꺼내기
             int matchCount = 0;
@@ -15,56 +16,49 @@ public class Result {
                     matchCount++;
                 }
             }
-            if (matchCount == 5) { // 2등 검증 > // 5개 + 보너스번호 맞춤
-                boolean bonusMatch =myLotto.getNumbers().contains(bonusNumber);
-                if (bonusMatch) {
-                    return 7;
-                }
-            }
-            if (matchCount ==3 | matchCount ==4 | matchCount == 5 |matchCount == 6) {
-                return matchCount;
+
+            if(matchCount == 6) { // 1등값 저장
+                rankArray[1]++;
+            } else if (matchCount == 5 && myLotto.getNumbers().contains(bonusNumber)) { //2등값 저장
+                rankArray[2]++;
+            } else if (matchCount == 5) { //3등값 저장
+                rankArray[3]++;
+            } else if (matchCount == 4) { //4등값 저장
+                rankArray[4]++;
+            } else if (matchCount == 3) { //5등값 저장
+                rankArray[5]++;
             }
         }
-            return 0;
+        return rankArray;
     }
 
-    // 등수내역 출력
+    // 등수 계산내역 출력
     public String calculateResult(List<Lotto> myLottos,List<Integer> readNumbers,int bonusNumber) {
-        int matchCount = checkResult(myLottos,readNumbers,bonusNumber);
+        int[] rankArray = checkResult(myLottos,readNumbers,bonusNumber);
 
-        if (matchCount == 6) {
-             return "1등: 6개 번호 일치 / 2,000,000,000원 " ;
-        } else if (matchCount == 7) {
-            return "2등: 5개 번호 + 보너스 번호 일치 / 30,000,000원 ";
-        } else if (matchCount == 5) {
-            return " 3등: 5개 번호 일치 / 1,500,000원 ";
-        } else if (matchCount == 4) {
-            return "4등: 4개 번호 일치 / 50,000원 ";
-        } else if (matchCount == 3) {
-            return "5등: 3개 번호 일치 / 5,000원 ";
-        }
+        return "1등: 6개 번호 일치 / 2,000,000,000원 - " + rankArray[1] + "개\n" +
+                "2등: 5개 번호 + 보너스 번호 일치 / 30,000,000원 - " + rankArray[2] + "개\n" +
+                "3등: 5개 번호 일치 / 1,500,000원 - " + rankArray[3] + "개\n" +
+                "4등: 4개 번호 일치 / 50,000원 - " + rankArray[4] + "개\n" +
+                "5등: 3개 번호 일치 / 5,000원 - " + rankArray[5] + "개";
 
-        return " 꽝! ";
+
+
     }
 
     // 수익률계산 >>  수익률(%) = (총 당첨금 / 총 구매금액) × 100
     public String calculateReturnRate(int money,List<Lotto> myLottos,List<Integer> readNumbers,int bonusNumber) {
-        int matchCount = checkResult(myLottos,readNumbers,bonusNumber);
-        double returnRate =0;
+        int[] rankArray = checkResult(myLottos,readNumbers,bonusNumber);
 
-        if (matchCount == 6) {
-            returnRate = (Rank.lottoRank.FIRST.getValue() / money) * 100;
-        } else if (matchCount == 7) {
-            returnRate = (Rank.lottoRank.SECOND.getValue() / money) * 100;
-        } else if (matchCount == 5) {
-            returnRate =  (Rank.lottoRank.THIRD.getValue() / money) * 100;
-        } else if (matchCount == 4) {
-            returnRate =  (Rank.lottoRank.FOURTH.getValue() / money) * 100;
-        } else if (matchCount == 3) {
-            returnRate = (Rank.lottoRank.FIFTH.getValue() / money) * 100;
-        }
+        int total = 0;
+        // 총당첨금
+        total += rankArray[1] * Rank.lottoRank.FIRST.getValue();
+        total += rankArray[2] * Rank.lottoRank.SECOND.getValue();
+        total += rankArray[3] * Rank.lottoRank.THIRD.getValue();
+        total += rankArray[4] * Rank.lottoRank.FOURTH.getValue();
+        total += rankArray[5] * Rank.lottoRank.FIFTH.getValue();
 
-
+        double returnRate = (double) (total / money) * 100;
         return "총 수익률은 " + returnRate + "% 입니다.";
     }
 }
