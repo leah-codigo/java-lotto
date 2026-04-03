@@ -58,7 +58,7 @@ public class Result {
         total += rankArray[4] * Rank.lottoRank.FOURTH.getValue();
         total += rankArray[5] * Rank.lottoRank.FIFTH.getValue();
 
-        double returnRate = (double) (total / money) * 100;
+        double returnRate = (double) total / money * 100;
         return "총 수익률은 " + returnRate + "% 입니다.";
     }
 }
